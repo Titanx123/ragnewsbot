@@ -1,7 +1,7 @@
 import { MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
-import { ChatInterface } from './components/ChatInterface';
+import  ChatInterface  from './components/ChatInterface';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import './App.css';

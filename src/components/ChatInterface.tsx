@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { TextInput, Button, Paper, Text, LoadingOverlay, ActionIcon, MantineProvider } from '@mantine/core';
+import { TextInput, Button, Paper, Text, LoadingOverlay, MantineProvider } from '@mantine/core';
 import { IconSend, IconRefresh, IconAlertCircle, IconRobot } from '@tabler/icons-react';
 import { chatApi } from '../utils/api';
 import type { ChatResponse } from '../utils/api';
@@ -241,7 +241,17 @@ export function ChatInterface() {
                   gap: '8px',
                   overflow: 'hidden'
                 }}>
-                  <Text size="md" fw={600} style={{ whiteSpace: 'nowrap' }}>
+                  <Text 
+                    size="xl" 
+                    fw={700} 
+                    style={{ 
+                      whiteSpace: 'nowrap',
+                      letterSpacing: '0.5px',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                      animation: 'fadeIn 0.5s ease-out'
+                    }}
+                  >
                     News Assistant
                   </Text>
                   <Button 
@@ -262,28 +272,51 @@ export function ChatInterface() {
                   </Button>
                 </div>
                 {sessionId && (
-                  <Text size="xs" c="dimmed" style={{ 
-                    lineHeight: 1.2,
-                    whiteSpace: 'nowrap',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    display: 'block',
-                    maxWidth: '100%'
-                  }}>
+                  <Text 
+                    size="xs" 
+                    style={{ 
+                      lineHeight: 1.2,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: 'block',
+                      maxWidth: '100%',
+                      color: 'rgba(255,255,255,0.85)',
+                      fontWeight: 500,
+                      textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                      animation: 'fadeIn 0.7s ease-out'
+                    }}
+                  >
                     Session: {sessionId.slice(0, 8)}...
                   </Text>
                 )}
               </div>
-              <ActionIcon 
-                variant="outline" 
+              <Button 
+                variant="light" 
                 color="blue" 
                 onClick={handleReset}
+                size="xs"
+                leftSection={<IconRefresh size={14} />}
+                style={{ 
+                  flexShrink: 0,
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  backdropFilter: 'blur(5px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '20px',
+                  padding: '0 12px',
+                  height: '28px',
+                  color: 'white',
+                  fontWeight: 500,
+                  transition: 'all 0.2s ease',
+                  '&:hover': {
+                    background: 'rgba(255, 255, 255, 0.25)',
+                    transform: 'translateY(-1px)'
+                  }
+                }}
                 title="Start New Chat"
-                size="sm"
-                style={{ flexShrink: 0 }}
               >
-                <IconRefresh size={16} />
-              </ActionIcon>
+                New Chat
+              </Button>
             </div>
           </div>
           
@@ -361,14 +394,23 @@ export function ChatInterface() {
             </div>
           )}
           
-          {/* Input Area - Wrapped in a stable container */}
+          {/* Input Area - Fixed at bottom */}
           <div style={{ 
-            position: 'sticky',
-            bottom: 0,
-            background: 'white',
-            borderTop: '1px solid #e9ecef',
-            padding: '0.75rem 1rem',
-            zIndex: 10
+            position: 'fixed',
+            left: '50%',
+            bottom: 'env(safe-area-inset-bottom, 0px)',
+            transform: 'translateX(-50%)',
+            width: '100%',
+            maxWidth: '800px',
+            background: 'rgba(255, 255, 255, 0.9)',
+            backdropFilter: 'blur(10px)',
+            borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+            padding: '0.75rem 1.5rem',
+            zIndex: 10,
+            boxSizing: 'border-box',
+            boxShadow: '0 -5px 30px rgba(67, 97, 238, 0.1)',
+            borderTopLeftRadius: '12px',
+            borderTopRightRadius: '12px'
           }}>
             <div style={{
               position: 'relative',
@@ -378,7 +420,7 @@ export function ChatInterface() {
               gap: '10px'
             }}>
               <TextInput
-                placeholder={sessionId ? "Ask me anything about recent news..." : "Connecting to chat service..."}
+                placeholder={sessionId ? "Ask me about recent news..." : "Connecting to chat service..."}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -386,47 +428,71 @@ export function ChatInterface() {
                 disabled={isLoading || !sessionId}
                 style={{
                   flex: 1,
-                  minWidth: 0, // Prevents flex item from overflowing
+                  minWidth: 0,
                 }}
                 styles={{
                   input: {
-                    paddingRight: '60px', // Space for button
-                    height: '48px',
+                    padding: '0 60px 0 20px',
+                    height: '56px',
                     fontSize: '1rem',
-                    borderRadius: '24px',
-                    border: '1px solid #ced4da',
-                    transition: 'all 0.2s ease',
+                    borderRadius: '28px',
+                    border: '2px solid rgba(67, 97, 238, 0.2)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                    transition: 'all 0.3s ease',
                     '&:focus': {
-                      borderColor: '#228be6',
-                      boxShadow: '0 0 0 2px rgba(34, 139, 230, 0.2)'
+                      borderColor: '#4361ee',
+                      boxShadow: '0 0 0 4px rgba(67, 97, 238, 0.15)',
+                      backgroundColor: 'white'
+                    },
+                    '&:hover': {
+                      borderColor: '#4361ee',
+                      backgroundColor: 'white'
+                    },
+                    '&::placeholder': {
+                      // fontSize: '0.9rem !important', 
+                      color: '#8e9aaf',
+                      opacity: 0.8
+                    },
+                    '&:disabled': {
+                      backgroundColor: '#f8f9fa',
+                      borderColor: '#e9ecef'
                     }
                   }
                 }}
               />
               <Button
-                variant="filled"
-                color="blue"
+                variant="gradient"
+                gradient={{ from: '#4361ee', to: '#3f37c9' }}
                 size="sm"
                 onClick={handleSendMessage}
                 disabled={!input.trim() || isLoading || !sessionId}
                 loading={isLoading}
                 style={{
                   position: 'absolute',
-                  right: '8px',
+                  right: '6px',
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: '42px',
-                  height: '42px',
-                  minWidth: '42px',
+                  width: '44px',
+                  height: '44px',
+                  minWidth: '44px',
                   padding: 0,
                   borderRadius: '50%',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 14px rgba(67, 97, 238, 0.4)',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-50%) scale(1.05)',
+                    boxShadow: '0 6px 18px rgba(67, 97, 238, 0.6)'
+                  },
                   '&:active:not(:disabled)': {
                     transform: 'translateY(-50%) scale(0.95)'
+                  },
+                  '&:disabled': {
+                    opacity: 0.6,
+                    background: '#e9ecef',
+                    color: '#adb5bd'
                   }
                 }}
                 title={!sessionId ? "Connecting to chat service..." : "Send message"}
