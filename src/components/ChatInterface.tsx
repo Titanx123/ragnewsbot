@@ -225,26 +225,51 @@ export function ChatInterface() {
     <MantineProvider>
       <div className="chat-container">
         <Paper shadow="sm" className="chat-paper" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          {/* Fixed Header */}
+          {/* Header */}
           <div className="chat-header">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Text size="lg" fw={600}>
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              width: '100%',
+              gap: '10px'
+            }}>
+              <div style={{ overflow: 'hidden' }}>
+                <div style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px',
+                  overflow: 'hidden'
+                }}>
+                  <Text size="md" fw={600} style={{ whiteSpace: 'nowrap' }}>
                     News Assistant
                   </Text>
                   <Button 
                     variant="subtle" 
                     size="xs" 
                     onClick={testConnection}
-                    leftSection={<IconRefresh size={14} />}
+                    leftSection={<IconRefresh size={12} />}
                     title="Test Backend Connection"
+                    p={4}
+                    style={{ flexShrink: 0 }}
                   >
-                    Test
+                    <span style={{ 
+                      display: 'none',
+                      '@media (minWidth: 400px)': { 
+                        display: 'inline' 
+                      } 
+                    } as React.CSSProperties}>Test</span>
                   </Button>
                 </div>
                 {sessionId && (
-                  <Text size="xs" c="dimmed" style={{ lineHeight: 1 }}>
+                  <Text size="xs" c="dimmed" style={{ 
+                    lineHeight: 1.2,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: 'block',
+                    maxWidth: '100%'
+                  }}>
                     Session: {sessionId.slice(0, 8)}...
                   </Text>
                 )}
@@ -254,9 +279,10 @@ export function ChatInterface() {
                 color="blue" 
                 onClick={handleReset}
                 title="Start New Chat"
-                size="md"
+                size="sm"
+                style={{ flexShrink: 0 }}
               >
-                <IconRefresh size={18} />
+                <IconRefresh size={16} />
               </ActionIcon>
             </div>
           </div>
